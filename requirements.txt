@@ -1,0 +1,7 @@
+time
+selenium
+pytesseract
+Pillow
+numpy
+easyocr
+opencv-python

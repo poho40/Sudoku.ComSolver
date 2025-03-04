@@ -109,7 +109,7 @@ for row in range(9):
         # Extract text (digit) from the processed cell
         # digit = pytesseract.image_to_string(cell_image, config="--oem 3 --psm 6 -c tessedit_char_whitelist=123456789")
         result = reader.readtext(cell_image, detail=0, allowlist='123456789')
-        print(f"Cell [{row}, {col}] digit: {result}")
+        # print(f"Cell [{row}, {col}] digit: {result}")
         if result:
             if (result[0] == '7'):
                 digit = pytesseract.image_to_string(cell_image, config="--oem 3 --psm 6 -c tessedit_char_whitelist=123456789")
@@ -123,7 +123,6 @@ for row in range(9):
 # Reshape the list to match a 9x9 Sudoku board
 sudoku_board = np.array(cells).reshape((9, 9))
 
-print
 def solveS(board, i, j):
     if i == len(board):
         return True
@@ -166,6 +165,7 @@ canvas_x, canvas_y = canvas_rect["x"], canvas_rect["y"]  # Top-left corner
 
 cell_res = canvas_rect['width'] // 9
 cell_he = canvas_rect['height'] // 9
+# print(canvas_rect)
 for row in range(9):
     for col in range(9):
         x = (2*col+1)/2*cell_he
@@ -180,7 +180,7 @@ for row in range(9):
         full_x, full_y = cell_coordiantes_full[row*9 + col]
         sudoku_board_int = sudoku_board.astype(int)
         answer = sudoku_board_int[row,col]
-        print(answer, x, y)
+        # print(answer, x, y)
         action = ActionChains(driver)
         action.move_to_element_with_offset(canvas, x - (canvas_rect['width'] // 2), y - (canvas_rect['height'] // 2)).click().perform()
 
@@ -189,25 +189,25 @@ for row in range(9):
         # Here I assume an input box is focused after clicking the canvas. 
         # If not, you will need to use JavaScript to set the value.
 
-        script = """
-                # var canvas = arguments[0];
-                # var answer = arguments[1];
-                # var ctx = canvas.getContext('2d');
+        # script = """
+        #         # var canvas = arguments[0];
+        #         # var answer = arguments[1];
+        #         # var ctx = canvas.getContext('2d');
                 
-                # // Draw the number on the canvas at the specified position
-                # ctx.font = '30px Arial';  // Adjust font size as needed
-                # ctx.fillStyle = 'black';  // Set text color
-                # ctx.clearRect(arguments[2], arguments[3], 50, 50);  // Clear previous value (if any)
-                # ctx.fillText(answer, arguments[2], arguments[3]);  // Draw the new text at position (x, y)
+        #         # // Draw the number on the canvas at the specified position
+        #         # ctx.font = '30px Arial';  // Adjust font size as needed
+        #         # ctx.fillStyle = 'black';  // Set text color
+        #         # ctx.clearRect(arguments[2], arguments[3], 50, 50);  // Clear previous value (if any)
+        #         # ctx.fillText(answer, arguments[2], arguments[3]);  // Draw the new text at position (x, y)
                 
-                # // Optionally, trigger a keypress event for visualization (but not needed for this task)
-                var event = new KeyboardEvent('keydown', {
-                    bubbles: true,
-                    cancelable: true,
-                    key: answer
-                });
-                canvas.dispatchEvent(event);
-            """
+        #         # // Optionally, trigger a keypress event for visualization (but not needed for this task)
+        #         var event = new KeyboardEvent('keydown', {
+        #             bubbles: true,
+        #             cancelable: true,
+        #             key: answer
+        #         });
+        #         canvas.dispatchEvent(event);
+        #     """
             # Pass the canvas element, answer text, and the cell location
         driver.find_element(By.TAG_NAME, "body").send_keys(str(answer))
         
