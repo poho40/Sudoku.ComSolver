@@ -1,13 +1,10 @@
-Sudoku Solver
+# Sudoku Solver
 
-This program solves Sudoku puzzles from sudoku.com
+This program solves Sudoku puzzles from [sudoku.com](https://www.sudoku.com/).
 
-Usage
+## Usage
 
 Run the program using Python 3 and provide a Sudoku puzzle URL from sudoku.com as an argument:
 
+```sh
 python3 solver.py [URL]
-
-Example
-
-python3 solver.py https://www.sudoku.com/evil/
