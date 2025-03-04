@@ -8,6 +8,7 @@ import pytesseract
 from PIL import Image
 import numpy as np
 import easyocr
+import sys
 import cv2
 
 
@@ -47,7 +48,8 @@ def preprocess_block(cell_image):
 driver = webdriver.Chrome()
 
 # Open a webpage
-driver.get("https://sudoku.com/extreme/")
+url = sys.argv[1]
+driver.get(url)
 
 time.sleep(2)  # Wait for expert mode to load
 gameTable = WebDriverWait(driver, 10).until(
@@ -78,7 +80,7 @@ binary = preprocess_block(pixels_array)
 
 
 # Save or display the processed image to check
-cv2.imwrite("black_digits.png", binary)
+# cv2.imwrite("black_digits.png", binary)
 
 # 2. Identify the cell boundaries (assuming each cell is of equal size)
 cell_width = binary.shape[1] // 9 
@@ -102,7 +104,7 @@ for row in range(9):
         # Extract the cell image from the grid
         cell_image = binary[y1:y2, x1:x2]
 
-        cv2.imwrite(f"sudoku_{row}_{col}.png", cell_image)
+        # cv2.imwrite(f"sudoku_{row}_{col}.png", cell_image)
 
         # Extract text (digit) from the processed cell
         # digit = pytesseract.image_to_string(cell_image, config="--oem 3 --psm 6 -c tessedit_char_whitelist=123456789")
