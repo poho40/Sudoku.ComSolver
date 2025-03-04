@@ -176,6 +176,8 @@ for row in range(9):
         cell_coordiantes_full.append((full_x,full_y))
 for row in range(9):
     for col in range(9):
+        canvas = gameTable.find_element(By.TAG_NAME, "canvas")
+        canvas_rect = canvas.rect
         x, y = cell_coordiantes[row*9 + col]
         full_x, full_y = cell_coordiantes_full[row*9 + col]
         sudoku_board_int = sudoku_board.astype(int)
